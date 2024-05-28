@@ -17,6 +17,7 @@ You can open an issue to report problems or suggest additions and improvements t
 - Installs **Discord** voice chatting and community app.
 - Installs `flatpak` and `yay` for package management.
 - Installs `wine`, `wine-gecko`, `wine-mono`, `vkd3d` and `lib32-vkd3d` in their latest versions to system to fix some issues with games on Lutris.
+- Installs `v4l-utils`, `v4l2loopback-dkms` and `v4l2loopback-utils` to fix some issues with webcams and enable Virtual Camera in OBS Studio.
 - Installs **Steam**, **Lutris**, **Heroic Games Launcher**, **Greenlight** (Flathub) and **Hydra Launcher** (AUR) to download and manage your games.
 - Installs the **Libreoffice** app suite for documents.
 - Performs a full system update to all `pacman`, **AUR** and `flatpak` packages. 
