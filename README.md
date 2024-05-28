@@ -11,8 +11,10 @@ You can open an issue to report problems or suggest additions and improvements t
 
 - Clone and install **Nvidia's latest proprietary drivers** using the FroggingFamily `nvidia-all` installer (*autoinstall_NVIDIA* only)
 - Installs all **PulseAudio and ALSA drivers**, and multilib compatibility for them to fix some issues with game audio on Lutris.
+- Installs **Discover** for GUI-oriented package management for distributions that don't have it by default like Endeavour.
 - Installs **Vivaldi**, degoogled chromium-based web browser with built-in ad-blocking and strict privacy controls.
 - Installs **Timeshift**, system restoration point manager.
+- Installs **Discord** voice chatting and community app.
 - Installs `flatpak` and `yay` for package management.
 - Installs `wine`, `wine-gecko`, `wine-mono`, `vkd3d` and `lib32-vkd3d` in their latest versions to system to fix some issues with games on Lutris.
 - Installs **Steam**, **Lutris**, **Heroic Games Launcher**, **Greenlight** (Flathub) and **Hydra Launcher** (AUR) to download and manage your games.
