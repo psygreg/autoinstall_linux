@@ -3,13 +3,11 @@ Shell script for Arch-based Linux distributions that installs dependencies and a
 
 **If all programs are installed, it will only update all system packages and create the restoration point.**
 
-Use *autoinstall_NVIDIA* to install the latest proprietary NVIDIA drivers available from `nvidia-all`. Otherwise, use *autoinstall_AMD*.
-
 You can open an issue to report problems or suggest additions and improvements to the script. 
 
 ## What this script does:
 
-- Clone and install **Nvidia's latest proprietary drivers** using the FroggingFamily `nvidia-all` installer (*autoinstall_NVIDIA* only)
+- Can clone and install **Nvidia's latest proprietary drivers** using the FroggingFamily `nvidia-all` installer if there's a Nvidia graphics card detected - user choice.
 - Installs all **PulseAudio and ALSA drivers**, and multilib compatibility for them to fix some issues with game audio on Lutris.
 - Installs **Discover** for GUI-oriented package management for distributions that don't have it by default like Endeavour.
 - Installs **Vivaldi**, degoogled chromium-based web browser with built-in ad-blocking and strict privacy controls.
