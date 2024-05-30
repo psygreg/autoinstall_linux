@@ -8,6 +8,7 @@ You can open an issue to report problems or suggest additions and improvements t
 ## Basic bundle:
 
 - Can clone and install **Nvidia's latest proprietary drivers** using the FroggingFamily `nvidia-all` installer if there's a Nvidia graphics card detected - user choice.
+- - If installing Nvidia drivers, will also check if **Prime** hybrid GPU functionality (for using integrated graphics) is necessary and configure it if so.
 - Installs all **PulseAudio and ALSA drivers**, and multilib compatibility for them to fix some issues with game audio on Lutris.
 - Installs **Discover** for GUI-oriented package management for distributions that don't have it by default like Endeavour.
 - Installs **Vivaldi**, degoogled chromium-based web browser with built-in ad-blocking and strict privacy controls.
@@ -22,6 +23,7 @@ You can open an issue to report problems or suggest additions and improvements t
 ## Gamer bundle:
 
 - Can clone and install **Nvidia's latest proprietary drivers** using the FroggingFamily `nvidia-all` installer if there's a Nvidia graphics card detected - user choice.
+- - If installing Nvidia drivers, will also check if **Prime** hybrid GPU functionality (for using integrated graphics) is necessary and configure it if so.
 - Installs all **PulseAudio and ALSA drivers**, and multilib compatibility for them to fix some issues with game audio on Lutris.
 - Installs **Discover** for GUI-oriented package management for distributions that don't have it by default like Endeavour.
 - Installs **Vivaldi**, degoogled chromium-based web browser with built-in ad-blocking and strict privacy controls.
