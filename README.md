@@ -8,31 +8,17 @@ You can open an issue to report problems or suggest additions and improvements t
 ## Basic bundle:
 
 - Can clone and install **Nvidia's latest proprietary drivers** using the FroggingFamily `nvidia-all` installer if there's a Nvidia graphics card detected - user choice.
-- - If installing Nvidia drivers, will also check if **Prime** hybrid GPU functionality (for using integrated graphics) is necessary and configure it if so.
-- Installs all **PulseAudio and ALSA drivers**, and multilib compatibility for them to fix some issues with game audio on Lutris.
-- Installs **Discover** for GUI-oriented package management for distributions that don't have it by default like Endeavour.
-- Installs **Vivaldi**, degoogled chromium-based web browser with built-in ad-blocking and strict privacy controls.
-- Installs **Timeshift**, system restoration point manager.
-- Installs **Discord** voice chatting and community app.
-- Installs `flatpak` and `yay` for package management.
-- Installs the **Libreoffice** app suite for documents and **Krita** for your digital art needs.
-- Installs an unofficial **Microsoft Teams** app from Flathub that works well for your professional needs.
-- Performs a full system update to all `pacman`, **AUR** and `flatpak` packages. 
-- **Creates a system restore point with Timeshift**.
+- If installing Nvidia drivers, will also check if **Prime** hybrid GPU functionality (for using integrated graphics) is necessary and configure it if so.
+- **Pacman** installs: `chromium timeshift libreoffice-fresh krita wine wine-gecko wine-mono freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse pipewire-pulse lib32-pipewire lib32-openal flatpak yay v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2`
+- **yay** installs: `pamac-all appimagelauncher debtap`
+- **flatpak** installs: `com.github.IsmaelMartinez.teams_for_linux`
+
 
 ## Gamer bundle:
 
 - Can clone and install **Nvidia's latest proprietary drivers** using the FroggingFamily `nvidia-all` installer if there's a Nvidia graphics card detected - user choice.
-- - If installing Nvidia drivers, will also check if **Prime** hybrid GPU functionality (for using integrated graphics) is necessary and configure it if so.
-- Installs all **PulseAudio and ALSA drivers**, and multilib compatibility for them to fix some issues with game audio on Lutris.
-- Installs **Discover** for GUI-oriented package management for distributions that don't have it by default like Endeavour.
-- Installs **Vivaldi**, degoogled chromium-based web browser with built-in ad-blocking and strict privacy controls.
-- Installs **Timeshift**, system restoration point manager.
-- Installs **Discord** voice chatting and community app.
-- Installs `flatpak` and `yay` for package management.
-- Installs `wine`, `wine-gecko`, `wine-mono`, `vkd3d` and `lib32-vkd3d` in their latest versions to system to fix some issues with games on Lutris.
-- Installs `v4l-utils`, `v4l2loopback-dkms` and `v4l2loopback-utils` to fix some issues with webcams and enable Virtual Camera in OBS Studio.
-- Installs **Steam**, **Lutris**, **Heroic Games Launcher**, **Greenlight** (Flathub) and **Hydra Launcher** (AUR) to download and manage your games.
-- Installs the **Libreoffice** app suite for documents.
-- Performs a full system update to all `pacman`, **AUR** and `flatpak` packages. 
-- **Creates a system restore point with Timeshift**.
+- If installing Nvidia drivers, will also check if **Prime** hybrid GPU functionality (for using integrated graphics) is necessary and configure it if so.
+- **Pacman** installs: `timeshift libreoffice-fresh lib32-vkd3d vkd3d gamemode lib32-gamemode wine wine-gecko wine-mono pipewire-pulse pulseaudio-alsa freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse lib32-pipewire lib32-openal flatpak yay v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 mangohud gamescope`
+- **yay** installs: `pamac-all xone-dkms hydra-launcher-bin appimagelauncher debtap`
+- **flatpak** installs: `com.obsproject.Studio net.lutris.Lutris org.prismlauncher.PrismLauncher com.valvesoftware.Steam com.heroicgameslauncher.hgl io.github.unknownskl.greenlight com.discordapp.Discord` 
+
