@@ -1,179 +1,131 @@
 #!/bin/sh
-echo "Language:"
-select lang in "en-US" "pt-BR"; do
-  case $lang in
-    en-US )
-      echo "This is the *Psygreg AutoInstall Script*."
-      echo "It will perform a complete system update, and install required dependencies, drivers and applications to your Arch-based Linux system.";
-      echo "If all programs are already installed, it will just perform the system update and create a system restore point through Timeshift.";
-      echo "Which bundle do you wish to install?"
-      select bundle in "Basic" "Gaming" "Cancel"; do
-        case $bundle in
-          Basic )
-            gpu=$(lspci | grep -i '.* vga .* nvidia .*')
-            shopt -s nocasematch
-            if [[ $gpu == *' nvidia '* ]]; then
-              printf 'Nvidia GPU is present:  %s\n' "$gpu"
-              echo "Would you like to install or update to the latest Nvidia proprietary drivers?"
-              select drv in "Yes" "No"; do
-                case $drv in
-                  Yes )
-                    gpus=$(lspci | grep VGA | wc -l)
-                    if [ "$gpus" -gt 1 ]; then
-                      sudo pacman -S --needed --noconfirm nvidia-prime
-                    else
-                      echo "Single GPU system. Prime not required."
-                    fi
-                    git clone https://github.com/Frogging-Family/nvidia-all.git && cd nvidia-all && makepkg -si;
-                    break;;
-                  No )
-                    echo "Skipping Nvidia drivers...";
-                    break;;
-                esac
-              done
+#vars_bundles
+BASE="sudo pacman -S --needed --noconfirm chromium timeshift libreoffice-fresh krita wine wine-gecko wine-mono freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse pipewire-pulse lib32-pipewire lib32-openal flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 && flatpak install -y --noninteractive --or-update com.github.IsmaelMartinez.teams_for_linux"
+BASEYAY="yay --noconfirm && yay -S --needed --noconfirm pamac-all appimagelauncher debtap"
+GAME="sudo pacman -S --needed --noconfirm timeshift lib32-vkd3d vkd3d gamemode lib32-gamemode wine wine-gecko wine-mono pipewire-pulse pulseaudio-alsa freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse lib32-pipewire lib32-openal flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 mangohud gamescope goverlay && flatpak install -y --noninteractive --or-update com.obsproject.Studio net.lutris.Lutris org.prismlauncher.PrismLauncher com.valvesoftware.Steam com.heroicgameslauncher.hgl io.github.unknownskl.greenlight com.discordapp.Discord com.valvesoftware.Steam.VulkanLayer.MangoHud org.freedesktop.Platform.VulkanLayer.MangoHud com.valvesoftware.Steam.Utility.MangoHud"
+GAMEYAY="yay --noconfirm && yay -S --needed --noconfirm pamac-all xone-dkms hydra-launcher-bin appimagelauncher debtap"
+#vars_gpu
+NVIDIA="git clone https://github.com/Frogging-Family/nvidia-all.git && cd nvidia-all && makepkg -si"
+PRIME="sudo pacman -S --needed --noconfirm nvidia-prime"
+GPUS=$(lspci | grep VGA | wc -l)
+#language function
+choose_lang() {
+    echo "Language:"
+    echo "1) en-US"
+    echo "2) pt-BR"
+    read -p "(1 or 2): " lang
+}
+#bundle function
+choose_bundle() {
+	echo "1) Basic"
+	echo "2) Gamer"
+	echo "3) Cancel"
+	read -p "(1, 2 or 3): " bundle
+}
+#yay function
+yay_func() {
+	if pacman -Qs yay > /dev/null; then
+        echo "YAY already installed, proceeding..."
+    else
+        pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+    fi
+}
+#gpu detect function
+gpu_detect() {
+	GPU=$(lspci | grep -i '.* vga .* nvidia .*')
+	shopt -s nocasematch
+}
+#nvidia driver functions
+choose_nvidia() {
+    echo "1) Yes"
+    echo "2) No"
+    read -p "(1 or 2): " drv
+}
+choose_nvidiabr() {
+	echo "1) Sim"
+	echo "2) Não"
+	read -p "(1 ou 2): " drv
+}
+#script run start
+choose_lang
+#en-US
+if [ "$lang" == "1" ]; then
+    echo "This is the *Psygreg AutoInstall Script*."
+    echo "It will perform a complete system update, and install required dependencies, drivers and applications to your Arch-based Linux system."
+    echo "If all programs are already installed, it will just perform the system update and create a system restore point through Timeshift." 
+    #detect nvidia GPU
+    gpu_detect
+    if [[ $GPU == *' nvidia '* ]]; then
+        printf 'Nvidia GPU is present:  %s\n' "$GPU"
+        echo "Would you like to install or update to the latest Nvidia proprietary drivers?"
+        choose_nvidia
+        if [ "$drv" == "1" ]; then
+            eval "$NVIDIA"
+            if [ "$GPUS" -gt 1 ]; then
+                eval "$PRIME"
             else
-              echo "Nvidia GPU not detected, skipping..."
-            fi;
-            sudo pacman -S --needed --noconfirm chromium timeshift libreoffice-fresh krita wine wine-gecko wine-mono freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse pipewire-pulse lib32-pipewire lib32-openal flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2;
-            flatpak install -y --noninteractive --or-update com.github.IsmaelMartinez.teams_for_linux;
-            if pacman -Qs yay > /dev/null; then
-              echo "YAY already installed, proceeding..."
+                echo "Single GPU system, PRIME not required. Skipping..."
+            fi
+        else
+            echo "Skipping Nvidia drivers..."
+        fi
+    else
+        echo "Nvidia GPU not detected."
+    fi
+    #bundle install
+    echo "Which bundle do you wish to install?"
+    choose_bundle
+        if [ "$bundle" == "1" ]; then
+            eval "$BASE"
+            yay_func
+            eval "$BASEYAY"
+        elif [ "$bundle" == "2" ]; then
+            eval "$GAME"
+            yay_func
+            eval "$GAMEYAY"
+        else
+            echo "Operation cancelled."
+            exit 0
+        fi
+    echo "Script Psygreg AutoInstall has finished successfully. Reboot to apply all changes."
+#pt-BR
+elif [ "$lang" == "2" ]; then
+    echo "Este é o script *Psygreg AutoInstall*."
+    echo "Ele atualiza completamente o sistema, instala todos os aplicativos, drivers e dependências necessárias para seu sistema Linux baseado em Arch."
+    echo "Se todos os programas já tiverem sido instalados, ele só irá fazer uma atualização completa do sistema e criará um ponto de restauração quando finalizar." 
+    #detect nvidia GPU
+    gpu_detect
+    if [[ $GPU == *' nvidia '* ]]; then
+        printf 'GPU Nvidia detectada:  %s\n' "$GPU"
+        echo "Você gostaria de instalar ou atualizar os drivers proprietários Nvidia?"
+        choose_nvidiabr
+        if [ "$drv" == "1" ]; then
+            eval "$NVIDIA"
+            if [ "$GPUS" -gt 1 ]; then
+                eval "$PRIME"
             else
-              pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-            fi;
-            yay --noconfirm;
-            yay -S --needed --noconfirm pamac-all appimagelauncher debtap;
-            sudo timeshift --create --comments "AutoInstall Restore Point" --tags W;
-            echo "Script Psygreg AutoInstall has finished successfully. Reboot to apply all changes.";
-            exit 0;;
-          Gaming )
-            gpu=$(lspci | grep -i '.* vga .* nvidia .*')
-            shopt -s nocasematch
-            if [[ $gpu == *' nvidia '* ]]; then
-              printf 'Nvidia GPU is present:  %s\n' "$gpu"
-              echo "Would you like to install or update to the latest Nvidia proprietary drivers?"
-              select drv in "Yes" "No"; do
-                case $drv in
-                  Yes )
-                    gpus=$(lspci | grep VGA | wc -l)
-                    if [ "$gpus" -gt 1 ]; then
-                      sudo pacman -S --needed --noconfirm nvidia-prime
-                    else
-                      echo "Single GPU system. Prime not required."
-                    fi
-                    git clone https://github.com/Frogging-Family/nvidia-all.git && cd nvidia-all && makepkg -si;
-                    break;;
-                  No )
-                    echo "Skipping Nvidia drivers...";
-                    break;;
-                esac
-              done
-            else
-              echo "Nvidia GPU not detected, skipping..."
-            fi;
-            sudo pacman -S --needed --noconfirm timeshift lib32-vkd3d vkd3d gamemode lib32-gamemode wine wine-gecko wine-mono pipewire-pulse pulseaudio-alsa freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse lib32-pipewire lib32-openal flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 mangohud gamescope goverlay;
-            flatpak install -y --noninteractive --or-update com.obsproject.Studio net.lutris.Lutris org.prismlauncher.PrismLauncher com.valvesoftware.Steam com.heroicgameslauncher.hgl io.github.unknownskl.greenlight com.discordapp.Discord com.valvesoftware.Steam.VulkanLayer.MangoHud org.freedesktop.Platform.VulkanLayer.MangoHud com.valvesoftware.Steam.Utility.MangoHud;
-            if pacman -Qs yay > /dev/null; then
-              echo "YAY already installed, proceeding..."
-            else
-              pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-            fi;
-            yay --noconfirm;
-            yay -S --needed --noconfirm pamac-all xone-dkms hydra-launcher-bin appimagelauncher debtap;
-            sudo timeshift --create --comments "AutoInstall Restore Point" --tags W;
-            echo "Script Psygreg AutoInstall has finished successfully. Reboot to apply all changes.";
-            exit 0;;
-          Cancel )
-            echo "Operation cancelled.";
-            exit 0;;
-        esac
-      done;;
-    pt-BR )
-      echo "Este é o script *Psygreg AutoInstall*."
-      echo "Ele atualiza completamente o sistema, instala todos os aplicativos, drivers e dependências necessárias para seu sistema Linux baseado em Arch.";
-      echo "Se todos os programas já tiverem sido instalados, ele só irá fazer uma atualização completa do sistema e criará um ponto de restauração quando finalizar.";
-      echo "Qual pacote deseja instalar?";
-      select pacote in "Básico" "Gamer" "Cancelar"; do
-        case $pacote in
-          Básico )
-            gpu=$(lspci | grep -i '.* vga .* nvidia .*')
-            shopt -s nocasematch
-            if [[ $gpu == *' nvidia '* ]]; then
-              printf 'GPU Nvidia detectada:  %s\n' "$gpu"
-              echo "Você gostaria de instalar ou atualizar os drivers proprietários Nvidia?"
-              select drvbr in "Sim" "Não"; do
-                case $drvbr in
-                  Sim )
-                    gpus=$(lspci | grep VGA | wc -l)
-                    if [ "$gpus" -gt 1 ]; then
-                      sudo pacman -S --needed --noconfirm nvidia-prime
-                    else
-                      echo "Sistema de GPU única. Prime não é necessário."
-                    fi
-                    git clone https://github.com/Frogging-Family/nvidia-all.git && cd nvidia-all && makepkg -si;
-                    break;;
-                  Não )
-                    echo "Pulando drivers Nvidia...";
-                    break;;
-                esac
-              done
-            else
-              echo "GPU Nvidia não detectada, pulando..."
-            fi;
-            sudo pacman -S --needed --noconfirm chromium timeshift libreoffice-fresh krita wine wine-gecko wine-mono freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse pipewire-pulse lib32-pipewire lib32-openal flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2;
-            flatpak install -y --noninteractive --or-update com.github.IsmaelMartinez.teams_for_linux;
-            if pacman -Qs yay > /dev/null; then
-              echo "YAY já instalado, continuando..."
-            else
-              pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-            fi;
-            yay --noconfirm;
-            yay -S --needed --noconfirm pamac-all appimagelauncher debtap;
-            sudo timeshift --create --comments "AutoInstall Restore Point" --tags W;
-            echo "Operações concluídas. Reinicie para aplicar as alterações.";
-            exit 0;;
-          Gamer )
-            gpu=$(lspci | grep -i '.* vga .* nvidia .*')
-            shopt -s nocasematch
-            if [[ $gpu == *' nvidia '* ]]; then
-              printf 'GPU Nvidia detectada:  %s\n' "$gpu"
-              echo "Você gostaria de instalar ou atualizar os drivers proprietários Nvidia?"
-              select drvbr in "Sim" "Não"; do
-                case $drvbr in
-                  Sim )
-                    gpus=$(lspci | grep VGA | wc -l)
-                    if [ "$gpus" -gt 1 ]; then
-                      sudo pacman -S --needed --noconfirm nvidia-prime
-                    else
-                      echo "Sistema de GPU única. Prime não é necessário."
-                    fi
-                    git clone https://github.com/Frogging-Family/nvidia-all.git && cd nvidia-all && makepkg -si;
-                    break;;
-                  Não )
-                    echo "Pulando drivers Nvidia...";
-                    break;;
-                esac
-              done
-            else
-              echo "GPU Nvidia não detectada, pulando..."
-            fi;
-            sudo pacman -S --needed --noconfirm timeshift lib32-vkd3d vkd3d gamemode lib32-gamemode wine wine-gecko wine-mono pipewire-pulse pulseaudio-alsa freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse lib32-pipewire lib32-openal flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 mangohud gamescope goverlay;
-            flatpak install -y --noninteractive --or-update com.obsproject.Studio net.lutris.Lutris org.prismlauncher.PrismLauncher com.valvesoftware.Steam com.heroicgameslauncher.hgl io.github.unknownskl.greenlight com.discordapp.Discord com.valvesoftware.Steam.VulkanLayer.MangoHud org.freedesktop.Platform.VulkanLayer.MangoHud com.valvesoftware.Steam.Utility.MangoHud;
-            if pacman -Qs yay > /dev/null; then
-              echo "YAY já instalado, continuando..."
-            else
-              pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-            fi;
-            yay --noconfirm;
-            yay -S --needed --noconfirm pamac-all xone-dkms hydra-launcher-bin appimagelauncher debtap;
-            sudo timeshift --create --comments "AutoInstall Restore Point" --tags W;
-            echo "Operações concluídas. Reinicie para aplicar as alterações.";
-            exit 0;;
-          Cancelar )
-            echo "Operação cancelada.";
-            exit 0;;
-        esac
-      done;;
-  esac
-done
-#this is the automated install script for gamers on Linux by psygreg. any issues must be reported on the discord community found at linktr.ee/psygreg
+                echo "Sistema sem modo GPU híbrida, pulando..."
+            fi
+        else
+            echo "Pulando drivers Nvidia..."
+        fi
+    else
+        echo "GPU Nvidia não detectada."
+    fi
+    #bundle install
+    echo "Qual pacote deseja instalar?"
+    choose_bundle
+        if [ "$bundle" == "1" ]; then
+            eval "$BASE"
+            yay_func
+            eval "$BASEYAY"
+        elif [ "$bundle" == "2" ]; then
+            eval "$GAME"
+            yay_func
+            eval "$GAMEYAY"
+        else
+            echo "Operação cancelada."
+            exit 0
+        fi
+    echo "Script Psygreg AutoInstall concluiu com sucesso. Reinicie para aplicar as alterações."
+fi
