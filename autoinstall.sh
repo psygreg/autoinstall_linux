@@ -34,8 +34,13 @@ select lang in "en-US" "pt-BR"; do
             else
               echo "Nvidia GPU not detected, skipping..."
             fi;
-            sudo pacman -S --needed --noconfirm chromium timeshift libreoffice-fresh krita wine wine-gecko wine-mono freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse pipewire-pulse lib32-pipewire lib32-openal flatpak yay v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2;
+            sudo pacman -S --needed --noconfirm chromium timeshift libreoffice-fresh krita wine wine-gecko wine-mono freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse pipewire-pulse lib32-pipewire lib32-openal flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2;
             flatpak install -y --noninteractive --or-update com.github.IsmaelMartinez.teams_for_linux;
+            if pacman -Qs yay > /dev/null; then
+              echo "YAY already installed, proceeding..."
+            else
+              pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+            fi;
             yay --noconfirm;
             yay -S --needed --noconfirm pamac-all appimagelauncher debtap;
             sudo timeshift --create --comments "AutoInstall Restore Point" --tags W;
@@ -66,8 +71,13 @@ select lang in "en-US" "pt-BR"; do
             else
               echo "Nvidia GPU not detected, skipping..."
             fi;
-            sudo pacman -S --needed --noconfirm timeshift lib32-vkd3d vkd3d gamemode lib32-gamemode wine wine-gecko wine-mono pipewire-pulse pulseaudio-alsa freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse lib32-pipewire lib32-openal flatpak yay v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 mangohud gamescope goverlay;
+            sudo pacman -S --needed --noconfirm timeshift lib32-vkd3d vkd3d gamemode lib32-gamemode wine wine-gecko wine-mono pipewire-pulse pulseaudio-alsa freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse lib32-pipewire lib32-openal flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 mangohud gamescope goverlay;
             flatpak install -y --noninteractive --or-update com.obsproject.Studio net.lutris.Lutris org.prismlauncher.PrismLauncher com.valvesoftware.Steam com.heroicgameslauncher.hgl io.github.unknownskl.greenlight com.discordapp.Discord com.valvesoftware.Steam.VulkanLayer.MangoHud org.freedesktop.Platform.VulkanLayer.MangoHud com.valvesoftware.Steam.Utility.MangoHud;
+            if pacman -Qs yay > /dev/null; then
+              echo "YAY already installed, proceeding..."
+            else
+              pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+            fi;
             yay --noconfirm;
             yay -S --needed --noconfirm pamac-all xone-dkms hydra-launcher-bin appimagelauncher debtap;
             sudo timeshift --create --comments "AutoInstall Restore Point" --tags W;
@@ -110,8 +120,13 @@ select lang in "en-US" "pt-BR"; do
             else
               echo "GPU Nvidia não detectada, pulando..."
             fi;
-            sudo pacman -S --needed --noconfirm chromium timeshift libreoffice-fresh krita wine wine-gecko wine-mono freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse pipewire-pulse lib32-pipewire lib32-openal flatpak yay v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2;
+            sudo pacman -S --needed --noconfirm chromium timeshift libreoffice-fresh krita wine wine-gecko wine-mono freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse pipewire-pulse lib32-pipewire lib32-openal flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2;
             flatpak install -y --noninteractive --or-update com.github.IsmaelMartinez.teams_for_linux;
+            if pacman -Qs yay > /dev/null; then
+              echo "YAY já instalado, continuando..."
+            else
+              pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+            fi;
             yay --noconfirm;
             yay -S --needed --noconfirm pamac-all appimagelauncher debtap;
             sudo timeshift --create --comments "AutoInstall Restore Point" --tags W;
@@ -142,8 +157,13 @@ select lang in "en-US" "pt-BR"; do
             else
               echo "GPU Nvidia não detectada, pulando..."
             fi;
-            sudo pacman -S --needed --noconfirm timeshift lib32-vkd3d vkd3d gamemode lib32-gamemode wine wine-gecko wine-mono pipewire-pulse pulseaudio-alsa freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse lib32-pipewire lib32-openal flatpak yay v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 mangohud gamescope goverlay;
+            sudo pacman -S --needed --noconfirm timeshift lib32-vkd3d vkd3d gamemode lib32-gamemode wine wine-gecko wine-mono pipewire-pulse pulseaudio-alsa freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse lib32-pipewire lib32-openal flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 mangohud gamescope goverlay;
             flatpak install -y --noninteractive --or-update com.obsproject.Studio net.lutris.Lutris org.prismlauncher.PrismLauncher com.valvesoftware.Steam com.heroicgameslauncher.hgl io.github.unknownskl.greenlight com.discordapp.Discord com.valvesoftware.Steam.VulkanLayer.MangoHud org.freedesktop.Platform.VulkanLayer.MangoHud com.valvesoftware.Steam.Utility.MangoHud;
+            if pacman -Qs yay > /dev/null; then
+              echo "YAY já instalado, continuando..."
+            else
+              pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+            fi;
             yay --noconfirm;
             yay -S --needed --noconfirm pamac-all xone-dkms hydra-launcher-bin appimagelauncher debtap;
             sudo timeshift --create --comments "AutoInstall Restore Point" --tags W;
