@@ -74,6 +74,14 @@ radeon_vlk() {
     fi
 }
 ##SCRIPT RUN START
+#check if OS is arch-based by looking for pacman
+if command -v pacman &> /dev/null; then
+    echo "Pacman detected. Starting..."
+else
+    echo "Pacman not detected."
+    exit 1
+fi
+#get language
 get_lang
 #en-US
 if [ "$ulang" == "en" ]; then
