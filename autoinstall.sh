@@ -1,4 +1,5 @@
 #!/bin/sh
+##VARS
 #vars_bundles
 BASE="sudo pacman -S --needed --noconfirm chromium timeshift libreoffice-fresh krita wine wine-gecko wine-mono freetype2 lib32-alsa-lib lib32-alsa-plugins lib32-libpulse pipewire-pulse lib32-pipewire lib32-openal flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 && flatpak install -y --noninteractive --or-update com.github.IsmaelMartinez.teams_for_linux"
 BASEYAY="yay --noconfirm && yay -S --needed --noconfirm pamac-all appimagelauncher debtap"
@@ -8,19 +9,36 @@ GAMEYAY="yay --noconfirm && yay -S --needed --noconfirm pamac-all xone-dkms hydr
 NVIDIA="git clone https://github.com/Frogging-Family/nvidia-all.git && cd nvidia-all && makepkg -si"
 PRIME="sudo pacman -S --needed --noconfirm nvidia-prime"
 GPUS=$(lspci | grep VGA | wc -l)
-#language function
-choose_lang() {
-    echo "Language:"
-    echo "1) en-US"
-    echo "2) pt-BR"
-    read -p "(1 or 2): " lang
-}
-#bundle function
+##FUNCTIONS
+#get language from OS
+get_lang() {
+      local lang="${LANG:0:2}"
+      local available=("pt" "en")
+
+      if [[ " ${available[*]} " == *"$lang"* ]]; then
+          ulang="$lang"
+      else
+          ulang="en"
+      fi
+    }
+#bundle picker
 choose_bundle() {
 	echo "1) Basic"
 	echo "2) Gamer"
 	echo "3) Cancel"
 	read -p "(1, 2 or 3): " bundle
+}
+#basic bundle
+basic_bundle() {            
+    eval "$BASE"
+    yay_func
+    eval "$BASEYAY"
+}
+#gamer bundle
+gamer_bundle() {
+	eval "$GAME"
+    yay_func
+    eval "$GAMEYAY"
 }
 #yay function
 yay_func() {
@@ -46,10 +64,10 @@ choose_nvidiabr() {
 	echo "2) Não"
 	read -p "(1 ou 2): " drv
 }
-#script run start
-choose_lang
+##SCRIPT RUN START
+get_lang
 #en-US
-if [ "$lang" == "1" ]; then
+if [ "$ulang" == "en" ]; then
     echo "This is the *Psygreg AutoInstall Script*."
     echo "It will perform a complete system update, and install required dependencies, drivers and applications to your Arch-based Linux system."
     echo "If all programs are already installed, it will just perform the system update and create a system restore point through Timeshift." 
@@ -76,20 +94,16 @@ if [ "$lang" == "1" ]; then
     echo "Which bundle do you wish to install?"
     choose_bundle
         if [ "$bundle" == "1" ]; then
-            eval "$BASE"
-            yay_func
-            eval "$BASEYAY"
+            basic_bundle
         elif [ "$bundle" == "2" ]; then
-            eval "$GAME"
-            yay_func
-            eval "$GAMEYAY"
+            gamer_bundle
         else
             echo "Operation cancelled."
             exit 0
         fi
     echo "Script Psygreg AutoInstall has finished successfully. Reboot to apply all changes."
 #pt-BR
-elif [ "$lang" == "2" ]; then
+elif [ "$ulang" == "pt" ]; then
     echo "Este é o script *Psygreg AutoInstall*."
     echo "Ele atualiza completamente o sistema, instala todos os aplicativos, drivers e dependências necessárias para seu sistema Linux baseado em Arch."
     echo "Se todos os programas já tiverem sido instalados, ele só irá fazer uma atualização completa do sistema e criará um ponto de restauração quando finalizar." 
@@ -116,13 +130,9 @@ elif [ "$lang" == "2" ]; then
     echo "Qual pacote deseja instalar?"
     choose_bundle
         if [ "$bundle" == "1" ]; then
-            eval "$BASE"
-            yay_func
-            eval "$BASEYAY"
+            basic_bundle
         elif [ "$bundle" == "2" ]; then
-            eval "$GAME"
-            yay_func
-            eval "$GAMEYAY"
+            gamer_bundle
         else
             echo "Operação cancelada."
             exit 0
