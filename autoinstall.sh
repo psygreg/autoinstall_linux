@@ -67,7 +67,7 @@ choose_nvidiabr() {
 #radeon vulkan patch
 radeon_vlk() {
     if pacman -Qs amdvlk > /dev/null; then
-        sudo pacman -R --noconfirm amdvlk
+        sudo pacman -R --noconfirm amdvlk lib32-amdvlk
         sudo pacman -S --needed --noconfirm vulkan-radeon lib32-vulkan-radeon
     else
         echo "Radeon Vulkan fix already applied, skipping..."
