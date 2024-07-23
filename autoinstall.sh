@@ -11,10 +11,10 @@ trap cleanup EXIT
 #bundle variables
 BASEPACMAN="sudo pacman -S --needed --noconfirm chromium libreoffice-fresh pinta wine wine-gecko wine-mono freetype2 flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2"
 BASEFLAT="flatpak install -y --noninteractive --or-update com.github.IsmaelMartinez.teams_for_linux"
-BASEAURA="aura --noconfirm && aura -A --needed --noconfirm appimagelauncher debtap"
+BASEAURA="aura -A --needed --noconfirm appimagelauncher debtap"
 GAMEPACMAN="sudo pacman -S --needed --noconfirm timeshift lib32-vkd3d vkd3d gamemode lib32-gamemode wine wine-gecko wine-mono freetype2 flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 mangohud gamescope goverlay"
-GAMEFLAT="flatpak install -y --noninteractive --or-update net.lutris.Lutris org.prismlauncher.PrismLauncher com.valvesoftware.Steam com.heroicgameslauncher.hgl io.github.unknownskl.greenlight com.discordapp.Discord com.valvesoftware.Steam.VulkanLayer.MangoHud org.freedesktop.Platform.VulkanLayer.MangoHud com.valvesoftware.Steam.Utility.MangoHud"
-GAMEAURA="aura --noconfirm && aura -A --needed --noconfirm xpad-neo-dkms appimagelauncher debtap obs-studio-tytan652"
+GAMEFLAT="flatpak install -y --noninteractive --or-update com.obsproject.Studio net.lutris.Lutris org.prismlauncher.PrismLauncher com.valvesoftware.Steam com.heroicgameslauncher.hgl io.github.unknownskl.greenlight com.discordapp.Discord com.valvesoftware.Steam.VulkanLayer.MangoHud org.freedesktop.Platform.VulkanLayer.MangoHud com.valvesoftware.Steam.Utility.MangoHud"
+GAMEAURA="aura -A --needed --noconfirm xpad-neo-dkms appimagelauncher debtap"
 #vars_gpu
 #NVIDIA="cd && git clone https://github.com/Frogging-Family/nvidia-all.git && cd nvidia-all && makepkg -si && cd && rm -r ~/nvidia-all"
 #PRIME="sudo pacman -S --needed --noconfirm nvidia-prime"
@@ -76,12 +76,12 @@ restore() {
 }
 #aura install
 aura_func () {
-    if pacman -Qs aura > /dev/null; then
+    if ! command -v aura &> /dev/null; then
         echo "$auracheck"
     else
         git clone https://aur.archlinux.org/aura-bin.git
         cd aura-bin || return
-        makepkg -Si
+        makepkg -sir
     fi
 }
 #gpu detect function
