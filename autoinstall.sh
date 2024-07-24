@@ -13,7 +13,7 @@ BASEPACMAN="sudo pacman -S --needed --noconfirm chromium libreoffice-fresh pinta
 BASEFLAT="flatpak install -y --noninteractive --or-update com.github.IsmaelMartinez.teams_for_linux"
 BASEAURA="aura -A --needed --noconfirm appimagelauncher debtap"
 GAMEPACMAN="sudo pacman -S --needed --noconfirm timeshift lib32-vkd3d vkd3d gamemode lib32-gamemode wine wine-gecko wine-mono freetype2 flatpak v4l2loopback-dkms v4l2loopback-utils v4l-utils pipewire-v4l2 lib32-pipewire-v4l2 mangohud gamescope goverlay"
-GAMEFLAT="flatpak install -y --noninteractive --or-update com.obsproject.Studio net.lutris.Lutris org.prismlauncher.PrismLauncher com.valvesoftware.Steam com.valvesoftware.Steam.CompatibilityTool.Proton-GE com.heroicgameslauncher.hgl io.github.unknownskl.greenlight com.discordapp.Discord com.valvesoftware.Steam.VulkanLayer.MangoHud org.freedesktop.Platform.VulkanLayer.MangoHud com.valvesoftware.Steam.Utility.MangoHud"
+GAMEFLAT="flatpak install -y --noninteractive --or-update com.obsproject.Studio net.lutris.Lutris org.prismlauncher.PrismLauncher com.valvesoftware.Steam com.heroicgameslauncher.hgl io.github.unknownskl.greenlight com.discordapp.Discord com.valvesoftware.Steam.VulkanLayer.MangoHud org.freedesktop.Platform.VulkanLayer.MangoHud com.valvesoftware.Steam.Utility.MangoHud"
 GAMEAURA="aura -A --needed --noconfirm xpad-neo-dkms appimagelauncher debtap"
 #vars_gpu
 #NVIDIA="cd && git clone https://github.com/Frogging-Family/nvidia-all.git && cd nvidia-all && makepkg -si && cd && rm -r ~/nvidia-all"
